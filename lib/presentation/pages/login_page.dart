@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/colors/app_colors.dart';
-import '../../shared/buttons/custom_elevated_button.dart';
-import '../../shared/input/custom_text_form_field.dart';
+import '../../core/constants/routes.dart';
+import '../widgets/buttons/custom_elevated_button.dart';
+import '../widgets/input/custom_text_form_field.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -94,7 +96,7 @@ class LoginPage extends StatelessWidget {
                           FractionallySizedBox(
                             widthFactor: 1,
                             child: CustomElevatedButton(
-                              onPressed: () {},
+                              onPressed: () => context.go(Routes.home),
                               borderRadius: 32,
                               backgroundColor: AppColors.spaceCadet,
                               child: Text(
