@@ -16,11 +16,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'MyAsa',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light(),
-      routerConfig: AppRoutes.configuration,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+      child: MaterialApp.router(
+        title: 'MyAsa',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.light(),
+        routerConfig: AppRoutes.configuration,
+      ),
     );
   }
 }
