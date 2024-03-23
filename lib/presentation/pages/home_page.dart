@@ -3,9 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
 import '../../core/colors/app_colors.dart';
-import '../widgets/buttons/custom_elevated_button.dart';
 import '../widgets/input/custom_text_form_field.dart';
 import '../widgets/others/student.dart';
+import 'register_student_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -139,7 +139,7 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => _showRegisterStudentDialog(context),
         backgroundColor: AppColors.ultraPurple,
         shape: const CircleBorder(),
         child: const Icon(
@@ -262,6 +262,14 @@ class HomePage extends StatelessWidget {
         ),
         const Flexible(child: SizedBox()),
       ],
+    );
+  }
+
+  void _showRegisterStudentDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      useRootNavigator: true,
+      builder: (_) => const RegisterStudentPage(),
     );
   }
 }
