@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         body: _buildBody(context),
-        bottomSheet: Container(
+        bottomNavigationBar: Container(
           padding: const EdgeInsets.all(8),
           decoration: const BoxDecoration(
             color: AppColors.white1,
@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       TextSpan(
                         text:
-                            '${Computation.getAverage(students.map((student) => student.average).toList()).toStringAsFixed(2)},',
+                        '${Computation.getAverage(students.map((student) => student.average).toList()).toStringAsFixed(2)}',
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       TextSpan(
                         text:
-                            '${Computation.getMinimum(students.map((student) => student.average).toList())}',
+                        '${Computation.getMinimum(students.map((student) => student.average).toList())}',
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       TextSpan(
                         text:
-                            '${Computation.getMaximum(students.map((student) => student.average).toList())}',
+                        '${Computation.getMaximum(students.map((student) => student.average).toList())}',
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium
@@ -161,14 +161,17 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => _showRegisterStudentDialog(context),
-          backgroundColor: AppColors.ultraPurple,
-          shape: const CircleBorder(),
-          child: const Icon(
-            Icons.add,
-            color: AppColors.white1,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButton: Container(
+          margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 75),
+          child: FloatingActionButton(
+            onPressed: () => _showRegisterStudentDialog(context),
+            backgroundColor: AppColors.ultraPurple,
+            shape: const CircleBorder(),
+            child: const Icon(
+              Icons.add,
+              color: AppColors.white1,
+            ),
           ),
         ),
       );

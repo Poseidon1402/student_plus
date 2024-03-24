@@ -57,8 +57,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
         borderRadius: BorderRadius.circular(16),
       ),
       child: SizedBox(
-        width: MediaQuery.sizeOf(context).width * 0.8,
-        height: MediaQuery.sizeOf(context).height * 0.75,
+        width: MediaQuery.sizeOf(context).width * 0.9,
+        height: MediaQuery.sizeOf(context).height * 0.78,
         child: Column(
           children: [
             Align(
@@ -84,8 +84,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                     borderRadius: BorderRadius.circular(24),
                     child: Image.file(
                       File(_img!),
-                      width: 170,
-                      height: 170,
+                      width: 120,
+                      height: 120,
                       fit: BoxFit.cover,
                     ),
                   );
@@ -97,13 +97,12 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                   radius: const Radius.circular(24),
                   padding: const EdgeInsets.all(10),
                   child: SizedBox(
-                    width: 170,
-                    height: 170,
+                    width: 120,
+                    height: 120,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset('assets/icons/tabler_photo_plus.svg'),
-                        const Gap(50),
+                        Flexible(child: SvgPicture.asset('assets/icons/tabler_photo_plus.svg')),
                         Text(
                           'Add a photo',
                           style: Theme.of(context)
@@ -118,7 +117,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                 );
               }),
             ),
-            const Gap(30),
+            const Gap(10),
             Expanded(
               flex: 2,
               child: Form(

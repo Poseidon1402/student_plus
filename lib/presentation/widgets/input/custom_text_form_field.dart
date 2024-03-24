@@ -92,7 +92,7 @@ class CustomTextFormField extends StatelessWidget {
             color: AppColors.red1,
           ),
         ),
-        errorStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+        errorStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
           color: AppColors.red1,
         ),
         errorBorder: OutlineInputBorder(
