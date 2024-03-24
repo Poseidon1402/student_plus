@@ -12,11 +12,25 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
 
   StudentBloc({required this.fetchStudents}) : super(StudentInitialState()) {
     on<FetchStudentEvent>(_handleFetchStudentEvent);
+    on<InsertStudentEvent>(_handleInsertStudentEvent);
   }
 
-  void _handleFetchStudentEvent(FetchStudentEvent event, Emitter<StudentState> emit) async {
+  void _handleFetchStudentEvent(
+      FetchStudentEvent event, Emitter<StudentState> emit) async {
     emit(StudentLoadingState());
     final students = await fetchStudents();
     emit(StudentLoadedState(students: students));
+  }
+
+  void _handleInsertStudentEvent(
+      InsertStudentEvent event, Emitter<StudentState> emit) async {
+    emit(
+      StudentLoadedState(
+        students: [
+          ...(state as StudentLoadedState).students,
+          event.student,
+        ],
+      ),
+    );
   }
 }

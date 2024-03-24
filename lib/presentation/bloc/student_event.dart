@@ -6,3 +6,12 @@ abstract class StudentEvent extends Equatable {
 }
 
 class FetchStudentEvent extends StudentEvent {}
+
+class InsertStudentEvent extends StudentEvent {
+  final StudentEntity student;
+
+  InsertStudentEvent({required this.student});
+
+  @override
+  List<Object?> get props => [student];
+}

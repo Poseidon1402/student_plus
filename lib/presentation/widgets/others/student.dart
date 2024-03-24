@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -21,12 +23,13 @@ class Student extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
-            child: Container(
-              width: 45,
-              height: 45,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(14),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.file(
+                File(student.imagePath),
+                width: 45,
+                height: 45,
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -39,7 +42,7 @@ class Student extends StatelessWidget {
                       text: '${student.name}\n',
                       style: Theme.of(context).textTheme.bodyLarge),
                   TextSpan(
-                    text: '2247',
+                    text: '${student.number}',
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge
@@ -150,12 +153,12 @@ class Student extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(44),
-                color: AppColors.green3.withOpacity(0.07),
+                color: student.average >= 10 ? AppColors.green3.withOpacity(0.07) : AppColors.blue1.withOpacity(0.07),
               ),
               child: Text(
-                'Admitted',
+                student.average >= 10 ? 'Admitted' : 'Repeater',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.green3,
+                      color: student.average >= 10 ? AppColors.green3 : AppColors.blue1,
                     ),
               ),
             ),

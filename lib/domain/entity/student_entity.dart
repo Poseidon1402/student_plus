@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class StudentEntity extends Equatable {
-  final String number;
+  final int number;
   final String name;
   final double math;
   final double physics;
