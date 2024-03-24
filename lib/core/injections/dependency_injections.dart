@@ -1,10 +1,32 @@
 import 'package:get_it/get_it.dart';
 
+import '../../data/repository/student_repository_impl.dart';
 import '../../data/sources/student_source.dart';
+import '../../domain/repository/student_repository.dart';
+import '../../domain/usecases/fetch_students.dart';
+import '../../presentation/bloc/student_bloc.dart';
 
 final sl = GetIt.instance;
 
 void setup() {
+  // Bloc
+  sl.registerFactory(
+    () => StudentBloc(
+      fetchStudents: sl(),
+    ),
+  );
+
+  // Use cases
+  sl.registerLazySingleton<FetchStudents>(
+    () => FetchStudentsImpl(repository: sl()),
+  );
+
+  // Repository
+  sl.registerLazySingleton<StudentRepository>(
+    () => StudentRepositoryImpl(source: sl()),
+  );
+
+  // Source
   sl.registerLazySingleton<StudentSource>(
     () => StudentSourceImpl(),
   );

@@ -3,10 +3,10 @@ import '../../domain/repository/student_repository.dart';
 import '../sources/student_source.dart';
 
 class StudentRepositoryImpl implements StudentRepository {
-  final StudentSource _source;
+  final StudentSource source;
 
-  StudentRepositoryImpl(this._source);
+  StudentRepositoryImpl({required this.source});
 
   @override
-  Future<List<StudentEntity>> fetchStudents() async => await _source.fetchStudents();
+  Future<List<StudentEntity>> fetchStudents() async => await source.fetchStudents();
 }

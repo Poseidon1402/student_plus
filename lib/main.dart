@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/injections/dependency_injections.dart';
 import 'core/navigation/app_routes.dart';
 import 'core/themes/app_theme.dart';
+import 'presentation/bloc/student_bloc.dart';
 
 void main() {
   setup();
@@ -21,11 +23,14 @@ class MyApp extends StatelessWidget {
       value: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
       ),
-      child: MaterialApp.router(
-        title: 'MyAsa',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.light(),
-        routerConfig: AppRoutes.configuration,
+      child: BlocProvider(
+        create: (_) => sl<StudentBloc>(),
+        child: MaterialApp.router(
+          title: 'MyAsa',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.light(),
+          routerConfig: AppRoutes.configuration,
+        ),
       ),
     );
   }
