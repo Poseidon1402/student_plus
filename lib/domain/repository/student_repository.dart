@@ -8,4 +8,5 @@ abstract class StudentRepository {
   Future<List<StudentEntity>> fetchStudents();
   Future<Either<Failure, StudentEntity>> insertStudent(StudentModel student);
   Future<StudentEntity> updateStudent(StudentModel student);
+  Future<bool> deleteStudent(int number);
 }

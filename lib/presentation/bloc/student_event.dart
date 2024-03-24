@@ -24,3 +24,12 @@ class UpdateStudentEvent extends StudentEvent {
   @override
   List<Object?> get props => [student];
 }
+
+class DeleteStudentEvent extends StudentEvent {
+  final int number;
+
+  DeleteStudentEvent({required this.number});
+
+  @override
+  List<Object?> get props => [number];
+}

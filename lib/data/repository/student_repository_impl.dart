@@ -26,4 +26,7 @@ class StudentRepositoryImpl implements StudentRepository {
 
   @override
   Future<StudentEntity> updateStudent(StudentModel student) async => await source.updateStudent(student);
+
+  @override
+  Future<bool> deleteStudent(int number) async => await source.deleteStudent(number);
 }

@@ -14,6 +14,7 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
     on<FetchStudentEvent>(_handleFetchStudentEvent);
     on<InsertStudentEvent>(_handleInsertStudentEvent);
     on<UpdateStudentEvent>(_handleUpdateStudentEvent);
+    on<DeleteStudentEvent>(_handleDeleteStudentEvent);
   }
 
   void _handleFetchStudentEvent(
@@ -48,6 +49,18 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
             return student;
           },
         ).toList(),
+      ),
+    );
+  }
+
+  void _handleDeleteStudentEvent(
+      DeleteStudentEvent event, Emitter<StudentState> emit) async {
+    emit(
+      StudentLoadedState(
+        students: (state as StudentLoadedState)
+            .students
+            .where((student) => student.number != event.number)
+            .toList(),
       ),
     );
   }

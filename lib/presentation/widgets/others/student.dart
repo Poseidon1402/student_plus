@@ -1,13 +1,19 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/colors/app_colors.dart';
+import '../../../core/injections/dependency_injections.dart';
 import '../../../domain/entity/student_entity.dart';
+import '../../../domain/usecases/delete_student.dart';
+import '../../bloc/student_bloc.dart';
 import '../../pages/register_student_page.dart';
 import '../buttons/custom_elevated_button.dart';
+import '../dialog/delete_content_dialog.dart';
 
 class Student extends StatelessWidget {
   final StudentEntity student;
@@ -155,12 +161,16 @@ class Student extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(44),
-                color: student.average >= 10 ? AppColors.green3.withOpacity(0.07) : AppColors.blue1.withOpacity(0.07),
+                color: student.average >= 10
+                    ? AppColors.green3.withOpacity(0.07)
+                    : AppColors.blue1.withOpacity(0.07),
               ),
               child: Text(
                 student.average >= 10 ? 'Admitted' : 'Repeater',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: student.average >= 10 ? AppColors.green3 : AppColors.blue1,
+                      color: student.average >= 10
+                          ? AppColors.green3
+                          : AppColors.blue1,
                     ),
               ),
             ),
@@ -224,7 +234,10 @@ class Student extends StatelessWidget {
                 FractionallySizedBox(
                   widthFactor: 1,
                   child: CustomElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => deleteConfirmationDialog(
+                      context: context,
+                      onDeleteButtonTapped: () => _deleteStudent(context),
+                    ),
                     borderRadius: 32,
                     backgroundColor: AppColors.red3,
                     child: Row(
@@ -259,7 +272,21 @@ class Student extends StatelessWidget {
     showDialog(
       context: context,
       useRootNavigator: true,
-      builder: (_) => RegisterStudentPage(student: student,),
+      builder: (_) => RegisterStudentPage(
+        student: student,
+      ),
     );
+  }
+
+  void _deleteStudent(BuildContext context) {
+    sl<DeleteStudent>().call(student.number).then((value) {
+      Fluttertoast.showToast(
+        msg: 'Student deleted successfully',
+        textColor: AppColors.white1,
+      );
+      context.read<StudentBloc>().add(DeleteStudentEvent(number: student.number));
+      context.pop();
+      context.pop();
+    });
   }
 }

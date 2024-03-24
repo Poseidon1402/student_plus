@@ -9,6 +9,7 @@ abstract class StudentSource {
   Future<List<StudentEntity>> fetchStudents();
   Future<StudentEntity> insertStudent(StudentModel student);
   Future<StudentEntity> updateStudent(StudentModel student);
+  Future<bool> deleteStudent(int number);
 }
 
 class StudentSourceImpl implements StudentSource {
@@ -55,5 +56,14 @@ class StudentSourceImpl implements StudentSource {
     );
 
     return student;
+  }
+
+  @override
+  Future<bool> deleteStudent(int number) async {
+    final database = await SqliteService.initDatabase();
+
+    await database.delete('Students', where: 'number = ?', whereArgs: [number]);
+
+    return true;
   }
 }
