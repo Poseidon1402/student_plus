@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'core/injections/dependency_injections.dart';
 import 'core/navigation/app_routes.dart';
 import 'core/themes/app_theme.dart';
 
 void main() {
-  // setup();
+  setup();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
