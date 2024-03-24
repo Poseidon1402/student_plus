@@ -1,35 +1,19 @@
 import 'package:sqflite/sqflite.dart';
 
+import '../../core/error/exceptions.dart';
+import '../../core/services/sqlite_service.dart';
 import '../../domain/entity/student_entity.dart';
 import '../models/student_model.dart';
 
 abstract class StudentSource {
   Future<List<StudentEntity>> fetchStudents();
-  Future<void> initDatabase();
+  Future<StudentEntity> insertStudent(StudentModel student);
 }
 
 class StudentSourceImpl implements StudentSource {
   @override
-  Future<Database> initDatabase() async {
-    var databasePath = await getDatabasesPath();
-    String path = '$databasePath/student.db';
-
-    final database = await openDatabase(
-      path,
-      version: 1,
-      onCreate: (Database db, int version) async {
-        await db.execute(
-          'CREATE TABLE Students (number INTEGER PRIMARY KEY, name TEXT, math REAL, physics REAL, average REAL, image_path TEXT)',
-        );
-      },
-    );
-
-    return database;
-  }
-
-  @override
   Future<List<StudentEntity>> fetchStudents() async {
-    final database = await initDatabase();
+    final database = await SqliteService.initDatabase();
 
     List<Map<String, dynamic>> data =
         await database.rawQuery('SELECT * FROM Students');
@@ -39,5 +23,22 @@ class StudentSourceImpl implements StudentSource {
     return students;
   }
 
+  @override
+  Future<StudentEntity> insertStudent(StudentModel student) async {
+    final database = await SqliteService.initDatabase();
 
+    final user = await database.query(
+      'Students',
+      where: 'number = ?',
+      whereArgs: [student.number],
+    );
+
+    if(user.isNotEmpty) {
+      throw DuplicatedException();
+    }
+
+    await database.insert('Students', student.toMap());
+
+    return student;
+  }
 }

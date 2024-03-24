@@ -1,0 +1,1 @@
+class DuplicatedException implements Exception {}

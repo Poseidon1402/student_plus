@@ -18,4 +18,12 @@ class StudentModel extends StudentEntity {
         imagePath: map['image_path'],
         average: map['physics'] * map['math'] / 2,
       );
+
+  Map<String, dynamic> toMap() => {
+    'number': super.number,
+    'name': super.name,
+    'math': super.math,
+    'physics': super.physics,
+    'image_path': super.imagePath,
+  };
 }
