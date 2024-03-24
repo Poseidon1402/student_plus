@@ -8,3 +8,7 @@ abstract class Failure extends Equatable {
   @override
   List<Object?> get props => [message];
 }
+
+class DuplicatedFailure extends Failure {
+  const DuplicatedFailure({super.message = 'Duplicated student number !'});
+}
