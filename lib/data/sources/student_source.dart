@@ -9,12 +9,6 @@ abstract class StudentSource {
 }
 
 class StudentSourceImpl implements StudentSource {
-  late final Database database;
-
-  StudentSourceImpl() {
-    initDatabase().then((database) => this.database = database);
-  }
-
   @override
   Future<Database> initDatabase() async {
     var databasePath = await getDatabasesPath();
@@ -25,7 +19,7 @@ class StudentSourceImpl implements StudentSource {
       version: 1,
       onCreate: (Database db, int version) async {
         await db.execute(
-          'CREATE TABLE Students (number INTEGER PRIMARY KEY, name TEXT, math REAL, physics REAL, average REAL)',
+          'CREATE TABLE Students (number INTEGER PRIMARY KEY, name TEXT, math REAL, physics REAL, average REAL, image_path TEXT)',
         );
       },
     );
@@ -35,9 +29,15 @@ class StudentSourceImpl implements StudentSource {
 
   @override
   Future<List<StudentEntity>> fetchStudents() async {
-    List<Map<String, dynamic>> data = await database.rawQuery('SELECT * FROM Studens');
-    List<StudentEntity> students = data.map((e) => StudentModel.fromMap(e)).toList();
+    final database = await initDatabase();
+
+    List<Map<String, dynamic>> data =
+        await database.rawQuery('SELECT * FROM Students');
+    List<StudentEntity> students =
+        data.map((e) => StudentModel.fromMap(e)).toList();
 
     return students;
   }
+
+
 }

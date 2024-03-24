@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
 import '../../core/colors/app_colors.dart';
+import '../bloc/student_bloc.dart';
 import '../widgets/input/custom_text_form_field.dart';
 import '../widgets/others/student.dart';
 import 'register_student_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    context.read<StudentBloc>().add(FetchStudentEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,12 +178,22 @@ class HomePage extends StatelessWidget {
             _buildHeader(context),
             const Gap(20),
             Expanded(
-              child: ListView.separated(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return const Student();
-                },
-                separatorBuilder: (context, index) => const Gap(20),
+              child: BlocBuilder<StudentBloc, StudentState>(
+                builder: (context, state) {
+                  if(state is StudentLoadingState || state is StudentInitialState) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  final students = (state as StudentLoadedState).students;
+
+                  return ListView.separated(
+                    itemCount: students.length,
+                    itemBuilder: (context, index) {
+                      return Student(student: students[index],);
+                    },
+                    separatorBuilder: (context, index) => const Gap(20),
+                  );
+                }
               ),
             ),
           ],

@@ -7,6 +7,7 @@ class StudentModel extends StudentEntity {
     required super.math,
     required super.physics,
     required super.average,
+    required super.imagePath,
   });
 
   factory StudentModel.fromMap(Map<String, dynamic> map) => StudentModel(
@@ -14,6 +15,7 @@ class StudentModel extends StudentEntity {
         name: map['name'],
         math: map['math'],
         physics: map['physics'],
+        imagePath: map['image_path'],
         average: map['physics'] * map['math'] / 2,
       );
 }

@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../core/colors/app_colors.dart';
+import '../../../domain/entity/student_entity.dart';
 import '../buttons/custom_elevated_button.dart';
 
 class Student extends StatelessWidget {
-  const Student({super.key});
+  final StudentEntity student;
+
+  const Student({
+    super.key,
+    required this.student,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +36,7 @@ class Student extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                      text: 'RAJOELISON Aina Tiavina\n',
+                      text: '${student.name}\n',
                       style: Theme.of(context).textTheme.bodyLarge),
                   TextSpan(
                     text: '2247',
@@ -57,7 +63,7 @@ class Student extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     TextSpan(
-                      text: '16.5',
+                      text: student.math.toString(),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: AppColors.charcoal,
                             fontWeight: FontWeight.w700,
@@ -89,7 +95,7 @@ class Student extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     TextSpan(
-                      text: '16.5',
+                      text: student.physics.toString(),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: AppColors.charcoal,
                             fontWeight: FontWeight.w700,
@@ -121,7 +127,7 @@ class Student extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     TextSpan(
-                      text: '16.5',
+                      text: student.average.toString(),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: AppColors.charcoal,
                             fontWeight: FontWeight.w700,
@@ -168,7 +174,7 @@ class Student extends StatelessWidget {
           Container(
             width: MediaQuery.sizeOf(context).width,
             padding: const EdgeInsets.all(15),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(24),
                 topRight: Radius.circular(24),
