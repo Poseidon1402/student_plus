@@ -7,4 +7,5 @@ import '../entity/student_entity.dart';
 abstract class StudentRepository {
   Future<List<StudentEntity>> fetchStudents();
   Future<Either<Failure, StudentEntity>> insertStudent(StudentModel student);
+  Future<StudentEntity> updateStudent(StudentModel student);
 }

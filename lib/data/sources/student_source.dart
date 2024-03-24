@@ -8,6 +8,7 @@ import '../models/student_model.dart';
 abstract class StudentSource {
   Future<List<StudentEntity>> fetchStudents();
   Future<StudentEntity> insertStudent(StudentModel student);
+  Future<StudentEntity> updateStudent(StudentModel student);
 }
 
 class StudentSourceImpl implements StudentSource {
@@ -38,6 +39,20 @@ class StudentSourceImpl implements StudentSource {
     }
 
     await database.insert('Students', student.toMap());
+
+    return student;
+  }
+
+  @override
+  Future<StudentEntity> updateStudent(StudentModel student) async {
+    final database = await SqliteService.initDatabase();
+
+    await database.update(
+      'Students',
+      student.toMap(),
+      where: 'number = ?',
+      whereArgs: [student.number],
+    );
 
     return student;
   }

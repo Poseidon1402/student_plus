@@ -83,14 +83,19 @@ String? isPhoneNumber(String? value) {
   return null;
 }
 
-String? intervalValue({String? value, int min = 0, int max = 10}) {
-  if (value != null && value.isEmpty) {
-    return 'Ce champ ne peut pas être vide';
+String? intervalValue({String? value, double min = 0, double max = 10}) {
+  try {
+    if (value != null && value.isEmpty) {
+      return 'Ce champ ne peut pas être vide';
+    }
+
+    if(value != null && (int.parse(value) < min || int.parse(value) > max)) {
+      return 'La valeur doit être comprise entre $min et $max';
+    }
+
+    return null;
+  } on Exception {
+    return null;
   }
 
-  if(value != null && (int.parse(value) < min || int.parse(value) > max)) {
-    return 'La valeur doit être comprise entre $min et $max';
-  }
-
-  return null;
 }

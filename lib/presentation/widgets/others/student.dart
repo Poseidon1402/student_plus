@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/colors/app_colors.dart';
 import '../../../domain/entity/student_entity.dart';
+import '../../pages/register_student_page.dart';
 import '../buttons/custom_elevated_button.dart';
 
 class Student extends StatelessWidget {
@@ -196,7 +198,7 @@ class Student extends StatelessWidget {
                 FractionallySizedBox(
                   widthFactor: 1,
                   child: CustomElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => _showUpdateStudentDialog(context),
                     borderRadius: 32,
                     backgroundColor: AppColors.spaceCadet,
                     child: Row(
@@ -249,6 +251,15 @@ class Student extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void _showUpdateStudentDialog(BuildContext context) {
+    context.pop();
+    showDialog(
+      context: context,
+      useRootNavigator: true,
+      builder: (_) => RegisterStudentPage(student: student,),
     );
   }
 }

@@ -5,6 +5,7 @@ import '../../data/sources/student_source.dart';
 import '../../domain/repository/student_repository.dart';
 import '../../domain/usecases/fetch_students.dart';
 import '../../domain/usecases/insert_student.dart';
+import '../../domain/usecases/update_student.dart';
 import '../../presentation/bloc/student_bloc.dart';
 
 final sl = GetIt.instance;
@@ -23,6 +24,9 @@ void setup() {
   );
   sl.registerLazySingleton<InsertStudent>(
     () => InsertStudentImpl(repository: sl()),
+  );
+  sl.registerLazySingleton<UpdateStudent>(
+    () => UpdateStudentImpl(repository: sl()),
   );
 
   // Repository

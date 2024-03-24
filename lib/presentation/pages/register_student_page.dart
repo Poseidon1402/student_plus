@@ -14,13 +14,17 @@ import '../../core/colors/app_colors.dart';
 import '../../core/injections/dependency_injections.dart';
 import '../../core/validator/form_validators.dart';
 import '../../data/models/student_model.dart';
+import '../../domain/entity/student_entity.dart';
 import '../../domain/usecases/insert_student.dart';
+import '../../domain/usecases/update_student.dart';
 import '../bloc/student_bloc.dart';
 import '../widgets/buttons/custom_elevated_button.dart';
 import '../widgets/input/custom_text_form_field.dart';
 
 class RegisterStudentPage extends StatefulWidget {
-  const RegisterStudentPage({super.key});
+  final StudentEntity? student;
+
+  const RegisterStudentPage({super.key, this.student});
 
   @override
   State<RegisterStudentPage> createState() => _RegisterStudentPageState();
@@ -28,11 +32,21 @@ class RegisterStudentPage extends StatefulWidget {
 
 class _RegisterStudentPageState extends State<RegisterStudentPage> {
   String? _img;
-  final TextEditingController _numberController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _physicsController = TextEditingController();
-  final TextEditingController _mathController = TextEditingController();
+  late final TextEditingController _numberController;
+  late final TextEditingController _nameController;
+  late final TextEditingController _physicsController;
+  late final TextEditingController _mathController;
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    _img = widget.student?.imagePath;
+    _numberController = TextEditingController(text: widget.student?.number.toString() ?? '');
+    _nameController = TextEditingController(text: widget.student?.name ?? '');
+    _mathController = TextEditingController(text: widget.student?.math.toString() ?? '');
+    _physicsController = TextEditingController(text: widget.student?.physics.toString() ?? '');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,8 +159,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                       controller: _mathController,
                       hintText: 'Mathematical note',
                       borderRadius: 24,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(signed: true),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
                       validator: (value) =>
                           intervalValue(value: value, min: 0, max: 20),
                       hintTextColor: AppColors.grey3,
@@ -157,8 +170,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                       controller: _physicsController,
                       hintText: 'Physical note',
                       borderRadius: 24,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(signed: true),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
                       validator: (value) =>
                           intervalValue(value: value, min: 0, max: 20),
                       hintTextColor: AppColors.grey3,
@@ -175,7 +187,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                 borderRadius: 32,
                 backgroundColor: AppColors.spaceCadet,
                 child: Text(
-                  'Add',
+                  widget.student != null ? 'Save' : 'Add',
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge
@@ -192,32 +204,56 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
 
   void _insertStudent() async {
     if (_formKey.currentState!.validate()) {
-      final result = await sl<InsertStudent>().call(
-        StudentModel(
-          number: int.parse(_numberController.text),
-          name: _nameController.text,
-          imagePath: '$_img',
-          math: double.parse(_mathController.text),
-          physics: double.parse(_physicsController.text),
-          average: (double.parse(_mathController.text) +
-                  double.parse(_physicsController.text)) /
-              2,
-        ),
-      );
-
-      result.fold(
-          (failure) => Fluttertoast.showToast(
-                msg: failure.message,
-                textColor: AppColors.white1,
-                backgroundColor: AppColors.red1,
-              ), (student) {
-        Fluttertoast.showToast(
-          msg: 'Student added successfully',
-          textColor: AppColors.white1,
+      if (widget.student != null) {
+        sl<UpdateStudent>()
+            .call(
+          StudentModel(
+            number: int.parse(_numberController.text),
+            name: _nameController.text,
+            imagePath: '$_img',
+            math: double.parse(_mathController.text),
+            physics: double.parse(_physicsController.text),
+            average: (double.parse(_mathController.text) +
+                    double.parse(_physicsController.text)) /
+                2,
+          ),
+        )
+            .then((student) {
+          Fluttertoast.showToast(
+            msg: 'Student updated successfully',
+            textColor: AppColors.white1,
+          );
+          context.read<StudentBloc>().add(UpdateStudentEvent(student: student));
+          context.pop();
+        });
+      } else {
+        final result = await sl<InsertStudent>().call(
+          StudentModel(
+            number: int.parse(_numberController.text),
+            name: _nameController.text,
+            imagePath: '$_img',
+            math: double.parse(_mathController.text),
+            physics: double.parse(_physicsController.text),
+            average: (double.parse(_mathController.text) +
+                    double.parse(_physicsController.text)) /
+                2,
+          ),
         );
-        context.read<StudentBloc>().add(InsertStudentEvent(student: student));
-        context.pop();
-      });
+
+        result.fold(
+            (failure) => Fluttertoast.showToast(
+                  msg: failure.message,
+                  textColor: AppColors.white1,
+                  backgroundColor: AppColors.red1,
+                ), (student) {
+          Fluttertoast.showToast(
+            msg: 'Student added successfully',
+            textColor: AppColors.white1,
+          );
+          context.read<StudentBloc>().add(InsertStudentEvent(student: student));
+          context.pop();
+        });
+      }
     }
   }
 

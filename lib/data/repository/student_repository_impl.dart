@@ -23,4 +23,7 @@ class StudentRepositoryImpl implements StudentRepository {
       return const Left(DuplicatedFailure());
     }
   }
+
+  @override
+  Future<StudentEntity> updateStudent(StudentModel student) async => await source.updateStudent(student);
 }

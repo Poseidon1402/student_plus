@@ -13,6 +13,7 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
   StudentBloc({required this.fetchStudents}) : super(StudentInitialState()) {
     on<FetchStudentEvent>(_handleFetchStudentEvent);
     on<InsertStudentEvent>(_handleInsertStudentEvent);
+    on<UpdateStudentEvent>(_handleUpdateStudentEvent);
   }
 
   void _handleFetchStudentEvent(
@@ -30,6 +31,23 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
           ...(state as StudentLoadedState).students,
           event.student,
         ],
+      ),
+    );
+  }
+
+  void _handleUpdateStudentEvent(
+      UpdateStudentEvent event, Emitter<StudentState> emit) async {
+    emit(
+      StudentLoadedState(
+        students: (state as StudentLoadedState).students.map(
+          (student) {
+            if (student.number == event.student.number) {
+              return event.student;
+            }
+
+            return student;
+          },
+        ).toList(),
       ),
     );
   }
