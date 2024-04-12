@@ -39,7 +39,7 @@ class Student extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          Flexible(
+          Expanded(
             child: RichText(
               text: TextSpan(
                 children: [
@@ -58,125 +58,71 @@ class Student extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 3,
-            child: Row(
-              children: [
-                Flexible(
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: const BoxDecoration(
-                      border: Border(left: BorderSide(color: AppColors.white3)),
-                    ),
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Math\n',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                          TextSpan(
-                            text: student.math.toString(),
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: AppColors.charcoal,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                          ),
-                          TextSpan(
-                            text: ' /20',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(color: AppColors.grey2),
-                          ),
-                        ],
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: const BoxDecoration(
+                border: Border(left: BorderSide(color: AppColors.white3), right: BorderSide(color: AppColors.white3)),
+              ),
+              child: Text.rich(
+                textAlign: TextAlign.center,
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: student.average.toString(),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.charcoal,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
-                  ),
+                    TextSpan(
+                      text: ' /20',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: AppColors.grey2),
+                    ),
+                  ],
                 ),
-                Flexible(
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: const BoxDecoration(
-                      border: Border(left: BorderSide(color: AppColors.white3)),
-                    ),
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Phys\n',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                          TextSpan(
-                            text: student.physics.toString(),
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AppColors.charcoal,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          TextSpan(
-                            text: ' /20',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(color: AppColors.grey2),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Flexible(
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: const BoxDecoration(
-                      border: Border(left: BorderSide(color: AppColors.white3)),
-                    ),
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Average\n',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                          TextSpan(
-                            text: student.average.toString(),
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AppColors.charcoal,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          TextSpan(
-                            text: ' /20',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(color: AppColors.grey2),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
           Flexible(
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(44),
-                color: student.average >= 10
-                    ? AppColors.green3.withOpacity(0.07)
-                    : AppColors.blue1.withOpacity(0.07),
-              ),
-              child: Text(
-                student.average >= 10 ? 'Admitted' : 'Repeater',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: student.average >= 10
-                          ? AppColors.green3
-                          : AppColors.blue1,
+            child: Builder(
+              builder: (context) {
+                if(student.average <= 5) {
+                  return Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(44),
+                      color: AppColors.red3.withOpacity(0.07),
                     ),
-              ),
+                    child: Text(
+                      'Excluded',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.red3,
+                      ),
+                    ),
+                  );
+                }
+
+                return Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(44),
+                    color: student.average >= 10
+                        ? AppColors.green3.withOpacity(0.07)
+                        : AppColors.blue1.withOpacity(0.07),
+                  ),
+                  child: Text(
+                    student.average >= 10 ? 'Admitted' : 'Repeater',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: student.average >= 10
+                              ? AppColors.green3
+                              : AppColors.blue1,
+                        ),
+                  ),
+                );
+              }
             ),
           ),
         ],

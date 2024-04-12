@@ -15,24 +15,14 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.spaceCadet,
+      backgroundColor: AppColors.green4,
       resizeToAvoidBottomInset: false,
       body: ConstrainedBox(
         constraints: const BoxConstraints.expand(),
         child: Column(
           children: [
-            const Gap(50),
-            SvgPicture.asset('assets/logo/logo1.svg'),
-            const Gap(30),
-            Text(
-              'The ultimate application for teachers',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(color: AppColors.white1),
-            ),
-            const Gap(30),
             Expanded(
+              flex: 5,
               child: Container(
                 constraints: const BoxConstraints.expand(),
                 padding: const EdgeInsets.symmetric(
@@ -42,18 +32,29 @@ class LoginPage extends StatelessWidget {
                 decoration: const BoxDecoration(
                   color: AppColors.white1,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32),
+                    bottomLeft: Radius.circular(32),
+                    bottomRight: Radius.circular(32),
                   ),
                 ),
                 child: Form(
                   child: Column(
                     children: [
+                      SvgPicture.asset('assets/logo/MoyenneMaster1.svg'),
+                      const Gap(30),
+                      Text(
+                        'A comprehensive view of academic performance',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge
+                            ?.copyWith(color: AppColors.grey1),
+                      ),
+                      const Gap(30),
                       Expanded(
                         child: ListView(
                           children: [
                             Text('Login',
-                                style: Theme.of(context).textTheme.titleLarge),
+                                style: Theme.of(context).textTheme.titleLarge?.copyWith(color: AppColors.green4)),
                             Text(
                               'To access your account',
                               style: Theme.of(context)
@@ -94,7 +95,7 @@ class LoginPage extends StatelessWidget {
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
-                                      ?.copyWith(color: AppColors.ultraPurple),
+                                      ?.copyWith(color: AppColors.green5),
                                   textAlign: TextAlign.end,
                                 )),
                             const Gap(30),
@@ -103,7 +104,7 @@ class LoginPage extends StatelessWidget {
                               child: CustomElevatedButton(
                                 onPressed: () => context.go(Routes.home),
                                 borderRadius: 32,
-                                backgroundColor: AppColors.spaceCadet,
+                                backgroundColor: AppColors.green4,
                                 child: Text(
                                   'Login',
                                   style: Theme.of(context)
@@ -116,27 +117,32 @@ class LoginPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Don\'t have an account ? ',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(color: AppColors.spaceCadet),
-                            ),
-                            TextSpan(
-                              text: 'Sign up',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: AppColors.ultraPurple,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                            ),
-                          ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Don\'t have an account ? ',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: AppColors.white1),
+                      ),
+                      TextSpan(
+                        text: 'Sign up',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(
+                          color: AppColors.green5,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ],
@@ -144,6 +150,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
+            const Gap(20),
           ],
         ),
       ),

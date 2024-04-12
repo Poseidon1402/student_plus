@@ -13,6 +13,8 @@ abstract class AppColors {
   static const Color green1 = Color.fromRGBO(0, 217, 74, 1);
   static const Color green2 = Color.fromRGBO(53, 255, 134, 1);
   static const Color green3 = Color.fromRGBO(20, 233, 156, 1);
+  static const Color green4 = Color.fromRGBO(38, 70, 83, 1);
+  static const Color green5 = Color.fromRGBO(42, 157, 143, 1);
   static const Color red1 = Color.fromRGBO(252, 70, 70, 1);
   static const Color red2 = Color.fromRGBO(255, 40, 40, 1);
   static const Color red3 = Color.fromRGBO(233, 20, 20, 1);

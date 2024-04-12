@@ -35,7 +35,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
   late final TextEditingController _numberController;
   late final TextEditingController _nameController;
   late final TextEditingController _physicsController;
-  late final TextEditingController _mathController;
+  late final TextEditingController _averageController;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -43,7 +43,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
     _img = widget.student?.imagePath;
     _numberController = TextEditingController(text: widget.student?.number.toString() ?? '');
     _nameController = TextEditingController(text: widget.student?.name ?? '');
-    _mathController = TextEditingController(text: widget.student?.math.toString() ?? '');
+    _averageController = TextEditingController(text: widget.student?.math.toString() ?? '');
     _physicsController = TextEditingController(text: widget.student?.physics.toString() ?? '');
     super.initState();
   }
@@ -119,7 +119,6 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             ),
             const Gap(10),
             Expanded(
-              flex: 2,
               child: Form(
                 key: _formKey,
                 child: ListView(
@@ -155,19 +154,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                     ),
                     const Gap(10),
                     CustomTextFormField(
-                      controller: _mathController,
-                      hintText: 'Mathematical note',
-                      borderRadius: 24,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
-                      validator: (value) =>
-                          intervalValue(value: value, min: 0, max: 20),
-                      hintTextColor: AppColors.grey3,
-                      backgroundColor: AppColors.white2,
-                    ),
-                    const Gap(10),
-                    CustomTextFormField(
-                      controller: _physicsController,
-                      hintText: 'Physical note',
+                      controller: _averageController,
+                      hintText: 'Average',
                       borderRadius: 24,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
                       validator: (value) =>
@@ -184,7 +172,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
               child: CustomElevatedButton(
                 onPressed: _insertStudent,
                 borderRadius: 32,
-                backgroundColor: AppColors.spaceCadet,
+                backgroundColor: AppColors.green5,
                 child: Text(
                   widget.student != null ? 'Save' : 'Add',
                   style: Theme.of(context)
@@ -210,9 +198,9 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             number: int.parse(_numberController.text),
             name: _nameController.text,
             imagePath: '$_img',
-            math: double.parse(_mathController.text),
+            math: double.parse(_averageController.text),
             physics: double.parse(_physicsController.text),
-            average: (double.parse(_mathController.text) +
+            average: (double.parse(_averageController.text) +
                     double.parse(_physicsController.text)) /
                 2,
           ),
@@ -231,9 +219,9 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             number: int.parse(_numberController.text),
             name: _nameController.text,
             imagePath: '$_img',
-            math: double.parse(_mathController.text),
+            math: double.parse(_averageController.text),
             physics: double.parse(_physicsController.text),
-            average: (double.parse(_mathController.text) +
+            average: (double.parse(_averageController.text) +
                     double.parse(_physicsController.text)) /
                 2,
           ),

@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       child: BlocProvider(
         create: (_) => sl<StudentBloc>(),
         child: MaterialApp.router(
-          title: 'MyAsa',
+          title: 'Moyenne Master',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.light(),
           routerConfig: AppRoutes.configuration,
