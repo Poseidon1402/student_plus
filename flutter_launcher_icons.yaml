@@ -2,6 +2,6 @@ flutter_launcher_icons:
   android: true
   remove_alpha_ios: true
   image_path: "assets/logo/MM2.png"
-  adaptive_icon_foreground: "assets/logo/logo2.png"
+  adaptive_icon_foreground: "assets/logo/MM2.png"
   adaptive_icon_background: "#FFFFFF"
   min_sdk_android: 16
