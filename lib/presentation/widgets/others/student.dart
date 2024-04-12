@@ -89,7 +89,7 @@ class Student extends StatelessWidget {
           Flexible(
             child: Builder(
               builder: (context) {
-                if(student.average <= 5) {
+                if(student.average < 5) {
                   return Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(

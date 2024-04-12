@@ -11,7 +11,7 @@ abstract class SqliteService {
       version: 1,
       onCreate: (Database db, int version) async {
         await db.execute(
-          'CREATE TABLE Students (number INTEGER PRIMARY KEY, name TEXT, math REAL, physics REAL, image_path TEXT)',
+          'CREATE TABLE Students (number INTEGER PRIMARY KEY, name TEXT, average REAL, image_path TEXT)',
         );
       },
     );

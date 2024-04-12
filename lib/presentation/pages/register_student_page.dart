@@ -34,7 +34,6 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
   String? _img;
   late final TextEditingController _numberController;
   late final TextEditingController _nameController;
-  late final TextEditingController _physicsController;
   late final TextEditingController _averageController;
   final _formKey = GlobalKey<FormState>();
 
@@ -43,8 +42,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
     _img = widget.student?.imagePath;
     _numberController = TextEditingController(text: widget.student?.number.toString() ?? '');
     _nameController = TextEditingController(text: widget.student?.name ?? '');
-    _averageController = TextEditingController(text: widget.student?.math.toString() ?? '');
-    _physicsController = TextEditingController(text: widget.student?.physics.toString() ?? '');
+    _averageController = TextEditingController(text: widget.student?.average.toString() ?? '');
     super.initState();
   }
 
@@ -198,11 +196,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             number: int.parse(_numberController.text),
             name: _nameController.text,
             imagePath: '$_img',
-            math: double.parse(_averageController.text),
-            physics: double.parse(_physicsController.text),
-            average: (double.parse(_averageController.text) +
-                    double.parse(_physicsController.text)) /
-                2,
+            average: double.parse(_averageController.text),
           ),
         )
             .then((student) {
@@ -219,11 +213,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             number: int.parse(_numberController.text),
             name: _nameController.text,
             imagePath: '$_img',
-            math: double.parse(_averageController.text),
-            physics: double.parse(_physicsController.text),
-            average: (double.parse(_averageController.text) +
-                    double.parse(_physicsController.text)) /
-                2,
+            average: double.parse(_averageController.text),
           ),
         );
 
